@@ -1,21 +1,32 @@
+import sounds from './data/sounds';
 import './App.scss';
 
 function App() {
+  const playSound = (e) => {
+    const sound = e.target.childNodes[0];
+    pauseSound(sound);
+    sound.play();
+  };
+
+  const pauseSound = (sound) => {
+    sound.pause();
+    sound.currentTime = 0;
+  };
+
   return (
     <div className="App">
-      <audio src="./sounds/applause.mp3"></audio>
-      <audio src="./sounds/boo.mp3"></audio>
-      <audio src="./sounds/gasp.mp3"></audio>
-      <audio src="./sounds/tada.mp3"></audio>
-      <audio src="./sounds/victory.mp3"></audio>
-      <audio src="./sounds/wrong.mp3"></audio>
       <div>
-        <button className="btn">text</button>
-        <button className="btn">text</button>
-        <button className="btn">text</button>
-        <button className="btn">text</button>
-        <button className="btn">text</button>
-        <button className="btn">text</button>
+        {sounds.length > 0 &&
+          sounds.map((sound) => (
+            <button
+              key={sound.id}
+              className="btn"
+              onClick={(e) => playSound(e)}
+            >
+              <audio src={sound.path} />
+              {sound.text}
+            </button>
+          ))}
       </div>
     </div>
   );
